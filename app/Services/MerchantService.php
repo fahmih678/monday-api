@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Merchant;
 use App\Repositories\MerchantRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +34,7 @@ class MerchantService
         return $this->merchantRepository->create($data);
     }
 
-    public function update(int $id, array $data): Merchant
+    public function update(int $id, array $data)
     {
         $fields = ['*'];
         $merchant = $this->merchantRepository->getById($id, $fields);
