@@ -23,7 +23,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:categories,name,' . $this->route('category'),
-            'tageline' => 'required|string|max:255',
+            'tagline' => 'required|string|max:255',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }

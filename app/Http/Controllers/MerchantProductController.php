@@ -16,10 +16,10 @@ class MerchantProductController extends Controller
         $this->merchantProductService = $merchantProductService;
     }
 
-    public function store(MerchantProductRequest $request, int $merchantId)
+    public function store(MerchantProductRequest $request, int $merchant)
     {
         $validated = $request->validated();
-        $validated['merchant_id'] = $merchantId;
+        $validated['merchant_id'] = $merchant;
 
         $merchantProduct = $this->merchantProductService->assignProductToMerchant($validated);
 

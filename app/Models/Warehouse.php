@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Storage;
 class Warehouse extends Model
 {
     use SoftDeletes;
-
     protected $fillable = ['name', 'address', 'photo', 'phone'];
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'warehouse_parents')
+        return $this->belongsToMany(Product::class, 'warehouse_products')
             ->withPivot('stock')
             ->withTimestamps();
     }

@@ -30,6 +30,7 @@ class ProductService
         if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
             $data['thumbnail'] = $this->uploadPhoto($data['thumbnail']);
         }
+        return $this->productRepository->create($data);
     }
 
     public function update(int $id, array $data)

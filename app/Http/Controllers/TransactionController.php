@@ -44,11 +44,15 @@ class TransactionController extends Controller
         }
     }
 
-    public function getTransactionByMerchant(int $merchantId)
+    public function getTransactionByMerchant()
     {
         $user = auth()->user();
 
-        if (!$user || !$user->merchant) {
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        if (!$user->merchant) {
             return response()->json(['message' => 'No merchant assigned'], 403);
         }
 

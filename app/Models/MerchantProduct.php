@@ -9,7 +9,7 @@ class MerchantProduct extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['merchant_id', 'product_id', 'stock'];
+    protected $fillable = ['merchant_id', 'product_id', 'warehouse_id', 'stock'];
 
     public function merchant()
     {

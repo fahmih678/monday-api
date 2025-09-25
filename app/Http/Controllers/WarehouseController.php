@@ -20,7 +20,7 @@ class WarehouseController extends Controller
     public function index()
     {
         $fields = ['id', 'name', 'photo'];
-        $warehouse = $this->warehouseService->getAll($fields ?: ['*']);
+        $warehouse = $this->warehouseService->getAll($fields);
         return response()->json(WarehouseResource::collection($warehouse));
     }
 
@@ -29,7 +29,7 @@ class WarehouseController extends Controller
         try {
             $fields = ['id', 'name', 'photo', 'phone'];
             $warehouse = $this->warehouseService->getById($id, $fields);
-            return response()->json(WarehouseResource::collection($warehouse));
+            return response()->json(new WarehouseResource($warehouse));
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'message' => 'warehouse not found'

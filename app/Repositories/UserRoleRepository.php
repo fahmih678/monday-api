@@ -12,7 +12,7 @@ class UserRoleRepository
         $user = User::findOrFail($userId);
         $role = Role::findOrFail($roleId);
 
-        $user->assigRole($role);
+        $user->assignRole($role->name);
         return $user;
     }
 
@@ -21,7 +21,7 @@ class UserRoleRepository
         $user = User::findOrFail($userId);
         $role = Role::findOrFail($roleId);
 
-        $user->removeRole($role);
+        $user->removeRole($role->name);
         return $user;
     }
 

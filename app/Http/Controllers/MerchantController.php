@@ -74,6 +74,10 @@ class MerchantController extends Controller
     {
         $userId = Auth::id();
 
+        if (!$userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         try {
             $merchants = $this->merchantService->getByKeeperId($userId);
             return response()->json(new MerchantResource($merchants));
