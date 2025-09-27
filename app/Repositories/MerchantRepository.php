@@ -39,7 +39,7 @@ class MerchantRepository
     {
         return Merchant::select($fields)
             ->where('keeper_id', $keeperId)
-            ->with(['products.category'])
+            ->with(['products.category', 'keeper'])
             ->firstOrFail();
     }
 }

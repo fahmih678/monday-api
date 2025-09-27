@@ -44,6 +44,8 @@ Route::middleware(['auth:sanctum', 'role:manager'])->group(function () {
     Route::post('merchants/{merchant}/products', [MerchantProductController::class, 'store']);
     Route::put('merchants/{merchant}/products/{product}', [MerchantProductController::class, 'update']);
     Route::delete('merchants/{merchant}/products/{product}', [MerchantProductController::class, 'destroy']);
+
+    Route::apiResource('transactions', TransactionController::class);
 });
 
 Route::middleware(['auth:sanctum', 'role:manager|keeper'])->group(function () {
@@ -59,6 +61,6 @@ Route::middleware(['auth:sanctum', 'role:manager|keeper'])->group(function () {
     Route::post('transactions', [TransactionController::class, 'store']);
     Route::get('transactions/{transaction}', [TransactionController::class, 'show']);
 
-    Route::get('my-merchants/', [MerchantController::class, 'getMyMerchantProfile']);
-    Route::get('my-merchants/transactions', [TransactionController::class, 'getTransactionByMerchant']);
+    Route::get('my-merchant/', [MerchantController::class, 'getMyMerchantProfile']);
+    Route::get('my-merchant/transactions', [TransactionController::class, 'getTransactionByMerchant']);
 });

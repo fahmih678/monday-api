@@ -9,15 +9,17 @@ use Illuminate\Support\Facades\Storage;
 class Category extends Model
 {
     use SoftDeletes;
-    
-    protected $fillable = ['name','photo', 'tagline'];
 
-    public function products(){
+    protected $fillable = ['name', 'photo', 'tagline'];
+
+    public function products()
+    {
         return $this->hasMany(Product::class);
     }
-    
-    public function getPhotoAttribute($value){
-        if(!$value){
+
+    public function getPhotoAttribute($value)
+    {
+        if (!$value) {
             return null;
         }
 

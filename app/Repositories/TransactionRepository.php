@@ -10,7 +10,7 @@ class TransactionRepository
     public function getAll(array $fields)
     {
         return Transaction::select($fields)
-            ->with(['transactionProducts.product', 'merchant.keeper']) // eager load relationships
+            ->with(['transactionProducts.product.category', 'merchant.keeper']) // eager load relationships
             ->latest()
             ->paginate(10);
     }
@@ -18,7 +18,7 @@ class TransactionRepository
     public function getById(int $id, array $fields)
     {
         return Transaction::select($fields)
-            ->with(['transactionProducts.product', 'merchant.keeper']) // eager load relationships
+            ->with(['transactionProducts.product.category', 'merchant.keeper']) // eager load relationships
             ->findOrFail($id);
     }
 
@@ -58,7 +58,7 @@ class TransactionRepository
     {
         return Transaction::where('merchant_id', $merchantId)
             ->select(['id', 'name', 'phone', 'merchant_id', 'grand_total', 'created_at'])
-            ->with(['merchant', 'transactionProducts.product'])
+            ->with(['merchant', 'transactionProducts.product.category'])
             ->latest()
             ->paginate(10);
     }

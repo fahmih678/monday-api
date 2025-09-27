@@ -70,7 +70,7 @@ class TransactionService
             $product = [];
 
             $subTotal = 0;
-            foreach ($data['products'] as $key => $productData) {
+            foreach ($data['products'] as $productData) {
                 $merchantProduct = $this->merchantProductRepository->getByMerchantAndProduct(
                     $data['merchant_id'],
                     $productData['product_id']
@@ -110,26 +110,26 @@ class TransactionService
                     $productData['product_id'],
                     $newStock
                 );
-
-                // pajak 10%
-                $taxTotal = $subTotal * 0.1;
-                $grandTotal = $subTotal + $taxTotal;
-
-                // create transaction
-                $transaction = $this->transactionRepository->create([
-                    'name' => $data['name'],
-                    'phone' => $data['phone'],
-                    'merchant_id' => $data['merchant_id'],
-                    'sub_total' => $subTotal,
-                    'tax_total' => $taxTotal,
-                    'grand_total' => $grandTotal,
-                ]);
-
-                // create transaction products
-                $this->transactionRepository->createTransactionProducts($transaction->id, $product);
-
-                return $transaction->fresh();
             }
+            // pajak 10%
+            $taxTotal = $subTotal * 0.1;
+            $grandTotal = $subTotal + $taxTotal;
+
+
+            // create transaction
+            $transaction = $this->transactionRepository->create([
+                'name' => $data['name'],
+                'phone' => $data['phone'],
+                'merchant_id' => $data['merchant_id'],
+                'sub_total' => $subTotal,
+                'tax_total' => $taxTotal,
+                'grand_total' => $grandTotal,
+            ]);
+
+            // create transaction products
+            $this->transactionRepository->createTransactionProducts($transaction->id, $product);
+
+            return $transaction->fresh();
         });
     }
 }
