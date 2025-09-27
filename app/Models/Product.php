@@ -11,41 +11,48 @@ class Product extends Model
     //
     use SoftDeletes;
 
-    protected $fillable = ['name', 'thumbnail','about','price','category_id','is_popular'];
+    protected $fillable = ['name', 'thumbnail', 'about', 'price', 'category_id', 'is_popular'];
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
     // Pivot
-    public function merchants(){
+    public function merchants()
+    {
         return $this->belongsToMany(Merchant::class, 'merchant_products')
-                    ->withPivot('stock')
-                    ->withTimestamps();
+            ->withPivot('stock')
+            ->withTimestamps();
     }
 
-    public function warehouses(){
+    public function warehouses()
+    {
         return $this->belongsToMany(Warehouse::class, 'warehouse_products')
-                    ->withPivot('stock')
-                    ->withTimestamps();
+            ->withPivot('stock')
+            ->withTimestamps();
     }
 
-    public function transactions(){
+    public function transactions()
+    {
         return $this->hasMany(TransactionProduct::class);
     }
 
-    public function getWarehouseProductStock():int{
+    public function getWarehouseProductStock(): int
+    {
         return $this->warehouses()->sum('stock');
     }
 
-    public function getMerchantProductStock():int {
+    public function getMerchantProductStock(): int
+    {
         return $this->merchants()->sum('stock');
     }
 
-    public function getThumbnailAttribute($value) {
-        if(!$value){
+    public function getThumbnailAttribute($value)
+    {
+        if (!$value) {
             return null; // No image available
         }
-        return url(Storage::url($value));
+        return url((env('PUBLIC_STORAGE', 'public_storage/') . $value));
     }
 }

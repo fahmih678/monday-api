@@ -60,7 +60,10 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
-        ]
+        ],
+
+        "serve": "php -S localhost:8000 -t ."
+
     },
     "extra": {
         "laravel": {

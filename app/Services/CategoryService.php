@@ -71,7 +71,7 @@ class CategoryService
     {
         $relativePath = 'categories/' . basename($photoPath);
         if (Storage::disk('public')->exists($relativePath)) {
-            Storage::disk('public')->exists($relativePath);
+            Storage::disk('public')->delete($relativePath);
         }
     }
 }
