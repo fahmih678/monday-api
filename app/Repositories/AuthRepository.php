@@ -35,7 +35,6 @@ class AuthRepository
 
         request()->session()->regenerate();
 
-
         $user = Auth::user();
         return response()->json([
             'message' => 'Login successful',
