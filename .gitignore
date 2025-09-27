@@ -15,9 +15,9 @@
 /node_modules
 /public/build
 /public/hot
-/public/laravel_storage
-/laravel_storage/*.key
-/laravel_storage/pail
+/public/storage
+/storage/*.key
+/storage/pail
 /vendor
 Homestead.json
 Homestead.yaml
