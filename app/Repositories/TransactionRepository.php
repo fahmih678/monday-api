@@ -12,7 +12,15 @@ class TransactionRepository
         return Transaction::select($fields)
             ->with(['transactionProducts.product.category', 'merchant.keeper']) // eager load relationships
             ->latest()
-            ->paginate(10);
+            ->get();
+    }
+
+    public function getPaginate(array $fields, int $num = 10)
+    {
+        return Transaction::select($fields)
+            ->with(['transactionProducts.product.category', 'merchant.keeper']) // eager load relationships
+            ->latest()
+            ->paginate($num);
     }
 
     public function getById(int $id, array $fields)
@@ -61,5 +69,9 @@ class TransactionRepository
             ->with(['merchant', 'transactionProducts.product.category'])
             ->latest()
             ->paginate(10);
+    }
+
+    public function getSumGrandTotalTransaction(){
+        return Transaction::sum('sub_total');
     }
 }

@@ -79,4 +79,8 @@ class MerchantService
             Storage::disk('public')->delete($relativePath);
         }
     }
+
+    public function getAllMerchantTransactions(array $fields){
+        return $this->merchantRepository->getAllMerchantTransactions($fields);
+    }
 }

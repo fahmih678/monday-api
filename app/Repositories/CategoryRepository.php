@@ -8,7 +8,12 @@ class CategoryRepository
 {
     public function getAll(array $fields)
     {
-        return Category::select($fields)->with('products')->latest()->paginate(10);
+        return Category::select($fields)->with('products')->latest()->get();
+    }
+
+    public function getPaginate(array $fields, int $num = 10)
+    {
+        return Category::select($fields)->with('products')->latest()->paginate($num);
     }
 
     public function getById(int $id, array $fields)
@@ -32,5 +37,11 @@ class CategoryRepository
     {
         $category = Category::findOrFail($id);
         $category->delete();
+    }
+
+    public function topCategory(){
+        return Category::select(['id','name'])->withCount('products')
+            ->orderBy('products_count', 'desc')
+            ->paginate(10);
     }
 }

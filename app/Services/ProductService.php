@@ -71,4 +71,8 @@ class ProductService
             Storage::disk('public')->delete($relativePath);
         }
     }
+
+    public function getAllProductTransactions(array $fields){
+        return $this->productRepository->getAllProductTransactions($fields);
+    }
 }

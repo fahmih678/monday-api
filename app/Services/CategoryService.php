@@ -74,4 +74,8 @@ class CategoryService
             Storage::disk('public')->delete($relativePath);
         }
     }
+
+    public function topCategory(){
+        return $this->categoryRepository->topCategory();
+    }
 }

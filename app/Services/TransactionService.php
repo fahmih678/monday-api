@@ -34,6 +34,10 @@ class TransactionService
         return $this->transactionRepository->getAll($fields);
     }
 
+    public function getPaginate(array $fields, int $num){
+        return $this->transactionRepository->getPaginate($fields, $num);
+    }
+
     public function getTransactionById(int $id, array $fields)
     {
         return $this->transactionRepository->getById($id, $fields ?? ['*']);
@@ -131,5 +135,9 @@ class TransactionService
 
             return $transaction->fresh();
         });
+    }
+
+    public function getSumGrandTotalTransaction(){
+        return $this->transactionRepository->getSumGrandTotalTransaction();
     }
 }

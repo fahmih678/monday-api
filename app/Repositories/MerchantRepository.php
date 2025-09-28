@@ -9,8 +9,13 @@ class MerchantRepository
 {
     public function getAll(array $fields)
     {
-        return Merchant::select($fields)->with(['keeper', 'products.category'])->latest()->paginate(10);
+        return Merchant::select($fields)->with(['keeper', 'products.category'])->latest()->get();
     }
+
+    public function getPaginate(array $fields, int $num = 10)
+    {
+        return Merchant::select($fields)->with(['keeper', 'products.category'])->latest()->paginate($num);
+    } 
 
     public function getById(int $id, array $fields)
     {
@@ -41,5 +46,15 @@ class MerchantRepository
             ->where('keeper_id', $keeperId)
             ->with(['products.category', 'keeper'])
             ->firstOrFail();
+    }
+
+    public function getAllMerchantTransactions($fields){
+        return Merchant::select($fields)
+                ->withSum('transactions', 'sub_total')
+                ->withCount('transactions')
+                ->orderBy('transactions_count', 'desc')
+                ->paginate(10);
+
+
     }
 }
