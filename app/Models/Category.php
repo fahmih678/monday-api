@@ -23,6 +23,6 @@ class Category extends Model
             return null;
         }
 
-        return asset(env('PUBLIC_STORAGE', 'public_storage/') . $value);
+        return url(Storage::url($value));
     }
 }

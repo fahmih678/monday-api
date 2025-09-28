@@ -53,6 +53,6 @@ class Product extends Model
         if (!$value) {
             return null; // No image available
         }
-        return url((env('PUBLIC_STORAGE', 'public_storage/') . $value));
+        return url(Storage::url($value));
     }
 }

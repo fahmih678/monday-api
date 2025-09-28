@@ -36,6 +36,6 @@ class Merchant extends Model
             return null;
         }
 
-        return url((env('PUBLIC_STORAGE', 'public_storage/') . $value));
+        return url(Storage::url($value));
     }
 }

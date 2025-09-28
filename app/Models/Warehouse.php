@@ -23,6 +23,6 @@ class Warehouse extends Model
         if (!$value) {
             return null;
         }
-        return url((env('PUBLIC_STORAGE', 'public_storage/') . $value));
+        return url(Storage::url($value));
     }
 }
