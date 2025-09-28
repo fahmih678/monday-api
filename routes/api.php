@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MerchantController;
-use App\Http\Controllers\MerchantProductController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserRoleController;
-use App\Http\Controllers\WarehouseController;
-use App\Http\Controllers\WarehouseProductController;
+use App\Http\Controllers\Api\{
+    AuthController,
+    CategoryController,
+    MerchantController,
+    MerchantProductController,
+    ProductController,
+    RoleController,
+    TransactionController,
+    UserController,
+    UserRoleController,
+    WarehouseController,
+    WarehouseProductController,
+};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
