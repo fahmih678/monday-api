@@ -20,4 +20,5 @@ Route::prefix('manage-categories')->controller(CategoryController::class)->group
     Route::post('store', 'store')->name('manage-categories.store');
     Route::get('edit/{id}', 'edit')->name('manage-categories.edit');
     Route::post('update/{id}', 'update')->name('manage-categories.update');
+    Route::delete('delete/{id}', 'destroy')->name('manage-categories.destroy');
 });
