@@ -22,3 +22,9 @@ Route::prefix('manage-categories')->controller(CategoryController::class)->group
     Route::post('update/{id}', 'update')->name('manage-categories.update');
     Route::delete('delete/{id}', 'destroy')->name('manage-categories.destroy');
 });
+
+Route::prefix('manage-products')->controller(ProductController::class)->group(function () {
+    Route::get('/', 'index')->name('manage-products.index');
+    Route::get('create', 'create')->name('manage-products.create');
+    Route::post('store', 'store')->name('manage-products.store');
+});

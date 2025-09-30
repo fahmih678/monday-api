@@ -20,6 +20,11 @@ class ProductService
         return $this->productRepository->getAll($fields);
     }
 
+    public function getPaginate(array $fields, int $num)
+    {
+        return $this->productRepository->getPaginate($fields, $num);
+    }
+
     public function getById(int $id, array $fields)
     {
         return $this->productRepository->getById($id, $fields ?? ['*']);
@@ -72,7 +77,8 @@ class ProductService
         }
     }
 
-    public function getAllProductTransactions(array $fields){
+    public function getAllProductTransactions(array $fields)
+    {
         return $this->productRepository->getAllProductTransactions($fields);
     }
 }

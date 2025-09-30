@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    @lang('translation.categories')
+    @lang('translation.products')
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -8,23 +8,23 @@
             Pages
         @endslot
         @slot('title')
-            Categories
+            Products
         @endslot
     @endcomponent
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">List Categories <span
-                            class="text-muted">({{ $categories->count() }} in totals)</span>
+                    <h4 class="card-title mb-0 flex-grow-1">List Products <span class="text-muted">({{ $products->count() }}
+                            in totals)</span>
                     </h4>
                     <div class="flex-shrink-0">
-                        <a href="{{ route('manage-categories.create') }}" class="btn btn-success add-btn"><i
+                        <a href="{{ route('manage-products.create') }}" class="btn btn-success add-btn"><i
                                 class="ri-add-line align-bottom me-1"></i> Add</a>
                     </div>
                 </div><!-- end card header -->
                 <div class="card-body">
-                    <p class="text-muted">Show available categories and count its product here. you can edit photo, name.
+                    <p class="text-muted">Show list products here. you can edit photo, name.
                     </p>
                     <div class="live-preview">
                         <div class="table-responsive">
@@ -34,35 +34,34 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Photo</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Product</th>
+                                        <th scope="col">Category</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($categories as $category)
+                                    @foreach ($products as $product)
                                         <tr>
                                             <th scope="row">
-                                                {{ $categories->firstItem() + $loop->index }}
+                                                {{ $products->firstItem() + $loop->index }}
                                             </th>
-                                            <td><img src="{{ $category->photo }}" width="40" height="40"
+                                            <td><img src="{{ $product->thumbnail }}" width="40" height="40"
                                                     alt="Photo"></td>
-                                            <td>{{ $category->name }}</td>
+                                            <td>{{ $product->name }} (Rp. {{ number_format($product->price) }})</td>
 
-                                            <td> {{ $category->products->count() }} listed</td>
+                                            <td> {{ $product->category->name }}</td>
                                             <td><!-- Base Buttons -->
-
-                                                <a href="{{ route('manage-categories.edit', $category->id) }}"
+                                                <a href="{{ route('manage-categories.edit', $product->id) }}"
                                                     class="btn btn-sm btn-soft-dark waves-effect waves-light me-2"
                                                     href="#" role="button">Edit</a>
-                                                <form action="{{ route('manage-categories.destroy', $category->id) }}"
+                                                <form action="{{ route('manage-categories.destroy', $product->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-danger btn-icon waves-effect waves-light {{ $category->products->count() > 0 ? 'disabled' : 0 }}"
-                                                        onclick="return confirmDelete({{ $category->products->count() }})">
+                                                    {{-- <button type="submit"
+                                                        class="btn btn-sm btn-danger btn-icon waves-effect waves-light {{ $product->products->count() > 0 ? 'disabled' : 0 }}"
+                                                        onclick="return confirmDelete({{ $product->products->count() }})">
                                                         <i class="ri-delete-bin-5-line"></i>
-                                                    </button>
+                                                    </button> --}}
                                                 </form>
                                             </td>
                                         </tr>
@@ -73,7 +72,7 @@
                     </div>
                 </div><!-- end card body -->
                 <div class="mx-3">
-                    {{ $categories->links('components.pagination-bootstrap-5') }}
+                    {{ $products->links('components.pagination-bootstrap-5') }}
                 </div>
             </div>
         </div>
