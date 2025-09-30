@@ -49,9 +49,20 @@
 
                                             <td> {{ $category->products->count() }} listed</td>
                                             <td><!-- Base Buttons -->
+
                                                 <a href="{{ route('manage-categories.edit', $category->id) }}"
-                                                    class="btn btn-sm btn-soft-dark waves-effect waves-light" href="#"
-                                                    role="button">Edit</a>
+                                                    class="btn btn-sm btn-soft-dark waves-effect waves-light me-2"
+                                                    href="#" role="button">Edit</a>
+                                                <form action="{{ route('manage-categories.destroy', $category->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-danger btn-icon waves-effect waves-light {{ $category->products->count() > 0 ? 'disabled' : 0 }}"
+                                                        onclick="return confirmDelete({{ $category->products->count() }})">
+                                                        <i class="ri-delete-bin-5-line"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -68,5 +79,14 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        function confirmDelete(productCount) {
+            if (productCount > 0) {
+                alert("Kategori ini masih memiliki produk, tidak bisa dihapus!");
+                return false; // cegah submit
+            }
+            return confirm("Apakah Anda yakin ingin menghapus kategori ini?");
+        }
+    </script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection
