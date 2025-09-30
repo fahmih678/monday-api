@@ -22,6 +22,11 @@ class CategoryService
         return $this->categoryRepository->getAll($fields);
     }
 
+    public function getPaginate(array $fields, int $num)
+    {
+        return $this->categoryRepository->getPaginate($fields, $num);
+    }
+
     public function getById(int $id, array $fields)
     {
         return $this->categoryRepository->getById($id, $fields ?? ['*']);
@@ -32,7 +37,6 @@ class CategoryService
         if (isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
             $data['photo'] = $this->uploadPhoto($data['photo']);
         }
-
         return $this->categoryRepository->create($data);
     }
 
@@ -75,7 +79,8 @@ class CategoryService
         }
     }
 
-    public function topCategory(){
+    public function topCategory()
+    {
         return $this->categoryRepository->topCategory();
     }
 }

@@ -39,8 +39,9 @@ class CategoryRepository
         $category->delete();
     }
 
-    public function topCategory(){
-        return Category::select(['id','name'])->withCount('products')
+    public function topCategory()
+    {
+        return Category::select(['id', 'name'])->withCount('products')
             ->orderBy('products_count', 'desc')
             ->paginate(10);
     }

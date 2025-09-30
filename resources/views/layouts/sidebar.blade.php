@@ -34,12 +34,14 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>@lang('translation.menu')</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="overview">
+                    <a class="nav-link menu-link {{ request()->routeIs('overview') ? 'active' : '' }}"
+                        href="{{ route('overview') }}">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.overview')</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="categories">
+                    <a class="nav-link menu-link {{ request()->routeIs('manage-categories.index', 'manage-categories.create', 'manage-categories.edit') ? 'active' : '' }}"
+                        href="{{ route('manage-categories.index') }}">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.categories')</span>
                     </a>
                 </li>
@@ -69,7 +71,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
-                        <i class="ri-pages-line"></i> <span>@lang('translation.manage-user')</span>
+                        <i class="ri-pages-line"></i> <span>@lang('translation.manage-users')</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarPages">
                         <ul class="nav nav-sm flex-column">
@@ -85,7 +87,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="setting">
-                        <i class="ri-account-circle-line"></i> <span>@lang('translation.setting')</span>
+                        <i class="ri-account-circle-line"></i> <span>@lang('translation.settings')</span>
                     </a>
                 </li>
             </ul>

@@ -489,7 +489,7 @@
             <div class="layout-rightside">
                 <div class="card h-100 rounded-0">
                     <div class="card-body p-0">
-                        <div class="p-3">
+                        {{-- <div class="p-3">
                             <h6 class="text-muted mb-0 text-uppercase fw-semibold">Recent Activity</h6>
                         </div>
                         <div data-simplebar style="max-height: 410px;" class="p-3 pt-0">
@@ -624,7 +624,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="p-3 mt-2">
                             <h6 class="text-muted mb-3 text-uppercase fw-semibold">Top 10 Categories

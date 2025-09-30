@@ -13,8 +13,11 @@ Route::get('/', function () {
     return view('pages-starter');
 });
 
-Route::get('/overview',[OverviewController::class, 'index']);
-Route::get('/categories',[CategoryController::class, 'index']);
-Route::get('/products',[ProductController::class, 'index']);
-Route::get('/warehouses',[WarehouseController::class, 'index']);
-Route::get('/merchants',[MerchantController::class, 'index']);
+Route::get('overview', [OverviewController::class, 'index'])->name('overview');
+Route::prefix('manage-categories')->controller(CategoryController::class)->group(function () {
+    Route::get('/', 'index')->name('manage-categories.index');
+    Route::get('create', 'create')->name('manage-categories.create');
+    Route::post('store', 'store')->name('manage-categories.store');
+    Route::get('edit/{id}', 'edit')->name('manage-categories.edit');
+    Route::post('update/{id}', 'update')->name('manage-categories.update');
+});
