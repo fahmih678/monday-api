@@ -8,19 +8,19 @@
             Manage Products
         @endslot
         @slot('title')
-            Create Product
+            Edit Product
         @endslot
     @endcomponent
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Create Product
+                    <h4 class="card-title mb-0 flex-grow-1">Edit Product
                     </h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <p class="text-muted">Create new product
+                    <p class="text-muted">Edit product
                     </p>
                     @if (session('success'))
                         <div class="alert alert-success" role="alert">
@@ -28,12 +28,14 @@
                         </div>
                     @endif
                     <div class="live-preview">
-                        <form action="{{ route('manage-products.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('manage-products.update', $product->id) }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Product Name</label>
                                 <input type="text" class="form-control  @error('name') is-invalid @enderror"
-                                    id="name" name="name" placeholder="Enter name" value="{{ old('name') }}">
+                                    id="name" name="name" placeholder="Enter name"
+                                    value="{{ old('name', $product->name) }}">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -45,11 +47,11 @@
                                         Rp
                                     </div>
                                     <input type="text" class="form-control @error('price') is-invalid @enderror"
-                                        id="price_display" placeholder="Enter price" value="{{ old('price') }}"
-                                        oninput="formatCurrency(this)">
+                                        id="price_display" placeholder="Enter price"
+                                        value="{{ old('price', $product->price) }}" oninput="formatCurrency(this)">
                                     {{-- Hidden input untuk simpan angka mentah --}}
                                     <input type="hidden" name="price" id="price"
-                                        value="{{ old('price', $product->price ?? '') }}">
+                                        value="{{ old('price', $product->price) }}">
                                     @error('price')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -58,10 +60,11 @@
                             <div class="mb-3">
                                 <label for="category_id" class="form-label">Product Category_id</label>
                                 <select class="form-control @error('category_id') is-invalid @enderror" name="category_id"
-                                    id="category_id" aria-valuenow="{{ old('category_id') }}">
-                                    <option value="">---Select category---</option>
+                                    id="category_id">
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option
+                                            value="{{ $category->id }}"{{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('category_id')
@@ -71,9 +74,11 @@
                             <div class="mb-3">
                                 <label for="is_popular" class="form-label">Is Popular</label>
                                 <select class="form-control @error('is_popular') is-invalid @enderror" name="is_popular"
-                                    id="is_popular" aria-valuenow="{{ old('is_popular') }}">
-                                    <option value="1">Yes, it is.</option>
-                                    <option value="0">No, it is not.</option>
+                                    id="is_popular">
+                                    <option value="1" {{ $product->is_popular == 1 ? 'selected' : '' }}>
+                                        Yes, it is.</option>
+                                    <option value="0" {{ $product->is_popular == 0 ? 'selected' : '' }}>
+                                        No, it is not.</option>
                                 </select>
                                 @error('is_popular')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -82,7 +87,8 @@
                             <div class="mb-3">
                                 <label for="about" class="form-label">Product about</label>
                                 <input type="text" class="form-control  @error('about') is-invalid @enderror"
-                                    id="about" name="about" placeholder="Enter about" value="{{ old('about') }}">
+                                    id="about" name="about" placeholder="Enter about"
+                                    value="{{ old('about', $product->about) }}">
                                 @error('about')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -94,9 +100,13 @@
                                 @error('thumbnail')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                                <div>
-                                    <img id="preview-photo" style="display:none; max-width:200px; margin-top:10px;" />
-                                </div>
+                                @if (isset($product) && $product->thumbnail)
+                                    <img id="preview-photo" src="{{ $product->thumbnail }}"
+                                        style="max-width:200px; margin-top:10px;" class="border rounded" />
+                                @else
+                                    <img id="preview-photo" style="display:none; max-width:200px; margin-top:10px;"
+                                        class="border rounded" />
+                                @endif
                             </div>
                             <div class="text-end">
                                 <a href="{{ route('manage-products.index') }}" class="btn btn-dark me-2">Cancel</a>
@@ -136,6 +146,13 @@
                 document.getElementById('price').value = "";
             }
         }
+        // langsung format saat page load
+        document.addEventListener("DOMContentLoaded", function() {
+            const input = document.getElementById("price_display");
+            if (input.value) {
+                formatCurrency(input);
+            }
+        });
     </script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection

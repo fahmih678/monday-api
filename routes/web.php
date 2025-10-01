@@ -27,4 +27,7 @@ Route::prefix('manage-products')->controller(ProductController::class)->group(fu
     Route::get('/', 'index')->name('manage-products.index');
     Route::get('create', 'create')->name('manage-products.create');
     Route::post('store', 'store')->name('manage-products.store');
+    Route::get('edit/{id}', 'edit')->name('manage-products.edit');
+    Route::post('update/{id}', 'update')->name('manage-products.update');
+    Route::delete('delete/{id}', 'destroy')->name('manage-products.destroy');
 });

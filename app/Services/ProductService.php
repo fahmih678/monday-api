@@ -47,6 +47,7 @@ class ProductService
             if (!empty($product->thumbnail)) {
                 $this->deletePhoto($product->thumbnail);
             }
+            $data['thumbnail'] = $this->uploadPhoto($data['thumbnail']);
         }
 
         return $this->productRepository->update($id, $data);

@@ -5,10 +5,10 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            Pages
+            Manage Categories
         @endslot
         @slot('title')
-            Category
+            Edit Category
         @endslot
     @endcomponent
     <div class="row">

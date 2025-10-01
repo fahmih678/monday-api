@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->routeIs('manage-products.index') ? 'active' : '' }}"
+                    <a class="nav-link menu-link {{ request()->routeIs('manage-products.index', 'manage-products.create', 'manage-products.edit') ? 'active' : '' }}"
                         href="{{ route('manage-products.index') }}">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.products')</span>
                     </a>

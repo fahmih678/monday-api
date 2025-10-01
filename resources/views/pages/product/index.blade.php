@@ -5,10 +5,10 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            Pages
+            Monday
         @endslot
         @slot('title')
-            Products
+            Manage Products
         @endslot
     @endcomponent
     <div class="row">
@@ -34,6 +34,7 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Photo</th>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -46,14 +47,14 @@
                                             </th>
                                             <td><img src="{{ $product->thumbnail }}" width="40" height="40"
                                                     alt="Photo"></td>
-                                            <td>{{ $product->name }} (Rp. {{ number_format($product->price) }})</td>
-
+                                            <td>{{ $product->name }} </td>
+                                            <td>Rp. {{ number_format($product->price) }}</td>
                                             <td> {{ $product->category->name }}</td>
                                             <td><!-- Base Buttons -->
-                                                <a href="{{ route('manage-categories.edit', $product->id) }}"
+                                                <a href="{{ route('manage-products.edit', $product->id) }}"
                                                     class="btn btn-sm btn-soft-dark waves-effect waves-light me-2"
                                                     href="#" role="button">Edit</a>
-                                                <form action="{{ route('manage-categories.destroy', $product->id) }}"
+                                                <form action="{{ route('manage-products.destroy', $product->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')

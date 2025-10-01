@@ -5,10 +5,10 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            Pages
+            Monday
         @endslot
         @slot('title')
-            Categories
+            Manage Categories
         @endslot
     @endcomponent
     <div class="row">
