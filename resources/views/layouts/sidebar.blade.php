@@ -52,7 +52,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="warehouses">
+                    <a class="nav-link menu-link {{ request()->routeIs('manage-warehouses.index', 'manage-warehouses.create', 'manage-warehouses.edit', 'manage-warehouses.show', 'manage-warehouses.assign-product', 'manage-warehouses.edit-stock-product') ? 'active' : '' }}"
+                        href="{{ route('manage-warehouses.index') }}">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.warehouses')</span>
                     </a>
                 </li>

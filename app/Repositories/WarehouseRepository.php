@@ -8,13 +8,11 @@ class WarehouseRepository
 {
     public function getAll(array $fields)
     {
-        $fields = array_merge(['id', 'created_at'], $fields);
         return Warehouse::select($fields)->with(['products.category'])->latest()->get();
     }
 
     public function getPaginate(array $fields, int $num = 10)
     {
-        $fields = array_merge(['id', 'created_at'], $fields);
         return Warehouse::select($fields)->with(['products.category'])->latest()->paginate($num);
     }
 

@@ -21,6 +21,11 @@ class WarehouseService
         return $this->warehouseRepository->getAll($fields ?? ['*']);
     }
 
+    public function getPaginate(array $fields, int $num)
+    {
+        return $this->warehouseRepository->getPaginate($fields ?? ['*'], $num);
+    }
+
     public function getById(int $id, array $fields)
     {
         return $this->warehouseRepository->getById($id, $fields ?? ['*']);
