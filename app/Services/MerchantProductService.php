@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-use App\Models\Merchant;
 use App\Repositories\MerchantProductRepository;
 use App\Repositories\MerchantRepository;
 use App\Repositories\WarehouseProductRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-class MerchanProductService
+class MerchantProductService
 {
     private MerchantRepository $merchantRepository;
     private MerchantProductRepository $merchantProductRepository;
@@ -23,6 +22,16 @@ class MerchanProductService
         $this->merchantRepository = $merchantRepository;
         $this->merchantProductRepository = $merchantProductRepository;
         $this->warehouseProductRepository = $warehouseProductRepository;
+    }
+
+    public function getProductsByMerchant(int $merchantId, array $fields)
+    {
+        return $this->merchantProductRepository->getProductsByMerchant($merchantId, $fields ?? ['*']);
+    }
+
+    public function getByMerchantAndProduct(int $merchantId, int $productId, array $fields)
+    {
+        return $this->merchantProductRepository->getByMerchantAndProduct($merchantId, $productId, $fields ?? ['*']);
     }
 
     public function assignProductToMerchant(array $data)

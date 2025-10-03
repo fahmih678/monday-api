@@ -12,6 +12,11 @@ class MerchantProductRepository
         return MerchantProduct::create($data);
     }
 
+    public function getProductsByMerchant(int $merchantId, array $fields)
+    {
+        return MerchantProduct::select($fields)->where('merchant_id', $merchantId)->with('product', 'warehouse')->get();
+    }
+
     public function getByMerchantAndProduct(int $merchantId, int $productId)
     {
         return MerchantProduct::where('merchant_id', $merchantId)

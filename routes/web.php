@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\{
     CategoryController,
     MerchantController,
+    MerchantProductController,
     ProductController,
     WarehouseController,
     OverviewController,
@@ -47,8 +48,23 @@ Route::prefix('manage-warehouses')->name('manage-warehouses.')->group(function (
     Route::controller(WarehouseProductController::class)->group(function () {
         Route::get('{warehouse_id}/assign-product', 'assignProduct')->name('assign-product');
         Route::post('{warehouse_id}/attach', 'attach')->name('attach-product');
-
         Route::get('{warehouse_id}/edit-stock/{product_id}', 'editStock')->name('edit-stock-product');
         Route::post('{warehouse_id}/edit-stock/{product_id}', 'update')->name('update-stock-product');
+    });
+});
+
+Route::prefix('manage-merchants')->name('manage-merchants.')->group(function () {
+    Route::controller(MerchantController::class)->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::post('store', 'store')->name('store');
+        Route::get('{id}', 'show')->name('show');
+        Route::delete('delete/{id}', 'destroy')->name('destroy');
+    });
+    Route::controller(MerchantProductController::class)->group(function () {
+        Route::get('{merchant_id}/assign-product', 'assignProduct')->name('assign-product');
+        Route::post('{merchant_id}/attach', 'store')->name('attach-product');
+        Route::get('{merchant_id}/edit-stock/{product_id}', 'editStock')->name('edit-stock-product');
+        Route::post('{merchant_id}/edit-stock/{product_id}', 'update')->name('update-stock-product');
     });
 });

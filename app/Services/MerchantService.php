@@ -20,6 +20,11 @@ class MerchantService
         return $this->merchantRepository->getAll($fields);
     }
 
+    public function getPaginate(array $fields, int $num)
+    {
+        return $this->merchantRepository->getPaginate($fields, $num);
+    }
+
     public function getById(int $id, array $fields)
     {
         return $this->merchantRepository->getById($id, $fields ?? ['*']);
@@ -80,7 +85,8 @@ class MerchantService
         }
     }
 
-    public function getAllMerchantTransactions(array $fields){
+    public function getAllMerchantTransactions(array $fields)
+    {
         return $this->merchantRepository->getAllMerchantTransactions($fields);
     }
 }

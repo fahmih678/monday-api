@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\MerchantProductRequest;
 use App\Http\Requests\MerchantProductUpdateRequest;
-use App\Services\MerchanProductService;
+use App\Services\MerchantProductService;
 use Illuminate\Http\Request;
 
 class MerchantProductController extends Controller
 {
-    private MerchanProductService $merchantProductService;
+    private MerchantProductService $merchantProductService;
 
-    public function __construct(MerchanProductService $merchantProductService)
+    public function __construct(MerchantProductService $merchantProductService)
     {
         $this->merchantProductService = $merchantProductService;
     }

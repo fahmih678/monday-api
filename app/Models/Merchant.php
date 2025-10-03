@@ -20,8 +20,7 @@ class Merchant extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'merchant_products')
-            ->withPivot('stock')
-            ->withPivot('warehouse_id')
+            ->withPivot('stock', 'warehouse_id')
             ->withTimestamps();
     }
 
