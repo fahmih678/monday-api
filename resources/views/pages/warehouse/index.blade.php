@@ -58,16 +58,19 @@
                                                 <a href="{{ route('manage-warehouses.show', $warehouse->id) }}"
                                                     class="btn btn-sm btn-primary waves-effect waves-light me-2"
                                                     href="#" role="button">Details</a>
-                                                <form action="{{ route('manage-warehouses.destroy', $warehouse->id) }}"
+                                                <a href="{{ route('manage-warehouses.edit', $warehouse->id) }}"
+                                                    class="btn btn-sm btn-secondary waves-effect waves-light me-2"
+                                                    href="#" role="button">Edit</a>
+                                                {{-- <form action="{{ route('manage-warehouses.destroy', $warehouse->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    {{-- <button type="submit"
+                                                    <button type="submit"
                                                         class="btn btn-sm btn-danger btn-icon waves-effect waves-light {{ $product->products->count() > 0 ? 'disabled' : 0 }}"
                                                         onclick="return confirmDelete({{ $product->products->count() }})">
                                                         <i class="ri-delete-bin-5-line"></i>
-                                                    </button> --}}
-                                                </form>
+                                                    </button>
+                                                </form> --}}
                                             </td>
                                         </tr>
                                     @endforeach

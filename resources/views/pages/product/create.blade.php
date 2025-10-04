@@ -61,7 +61,6 @@
                                     id="category_id" aria-valuenow="{{ old('category_id') }}">
                                     <option value="">---Select category---</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         <option value="{{ $category->id }}"
                                             {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}</option>

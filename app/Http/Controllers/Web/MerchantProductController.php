@@ -32,13 +32,14 @@ class MerchantProductController extends Controller
         $warehouses_id = $merchantProducts->pluck('warehouse_id')->toArray();
 
         // ambil produk yang belum ada
-        $warehouseProduct = WarehouseProduct::whereNotIn('product_id', $products_id)->with('product') // product_id yg mau dikecualikan
-            ->whereNotIn('warehouse_id', $warehouses_id)             // warehouse_id yg mau dikecualikan
+        $warehouseProduct = WarehouseProduct::whereNotIn('product_id', $products_id) // product_id yg mau dikecualikan
+            ->whereNotIn('warehouse_id', $warehouses_id)            // warehouse_id yg mau dikecualikan
+            ->with('product', 'warehouse') // eager load relasi product dan warehouse
             ->get();
 
         return view('pages.merchant.merchant-product.assign-product', [
             'merchant' => $merchants,
-            'products' => $warehouseProduct,
+            'warehouse_product' => $warehouseProduct,
         ]);
     }
 
@@ -54,9 +55,14 @@ class MerchantProductController extends Controller
         ]);
     }
 
-    public function store(Request $request, int $merchant)
+    public function attach(Request $request, int $merchant)
     {
+        $productId = WarehouseProduct::where('id', $request->wp)->value('product_id');
+        $request->merge(['product_id' => $productId]);
+        $request->merge(['warehouse_id' => $request->wp]);
+
         $validated = $request->validate([
+            'wp' => 'required|exists:warehouse_products,id',
             'product_id' => 'required|exists:products,id',
             'warehouse_id' => 'required|exists:warehouses,id',
             'stock' => 'required|integer|min:1',

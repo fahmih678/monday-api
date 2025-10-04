@@ -8,19 +8,20 @@
             Manage Warehouses
         @endslot
         @slot('title')
-            Show Warehouse
+            Edit Warehouse
         @endslot
     @endcomponent
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Show Warehouse
+                    <h4 class="card-title mb-0 flex-grow-1">Edit Warehouse
                     </h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <p class="text-muted">Create new warehouse
+                    <p class="text-muted">Edit warehouse information here. You can change the name, phone, location, and
+                        photo.
                     </p>
                     @if (session('success'))
                         <div class="alert alert-success" role="alert">
@@ -28,12 +29,14 @@
                         </div>
                     @endif
                     <div class="live-preview">
-                        <form action="{{ route('manage-warehouses.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('manage-warehouses.update', $warehouse->id) }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Warehouse Name</label>
                                 <input type="text" class="form-control  @error('name') is-invalid @enderror"
-                                    id="name" name="name" placeholder="Enter name" value="{{ old('name') }}">
+                                    id="name" name="name" placeholder="Enter name"
+                                    value="{{ old('name', $warehouse->name) }}">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -45,10 +48,11 @@
                                         (+62)
                                     </div>
                                     <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                        id="phone_display" placeholder="Enter phone" value="{{ old('phone') }}"
-                                        oninput="formatPhone(this)">
+                                        id="phone_display" placeholder="Enter phone"
+                                        value="{{ old('phone', $warehouse->phone) }}" oninput="formatPhone(this)">
                                     {{-- Hidden input untuk simpan angka mentah --}}
-                                    <input type="hidden" name="phone" id="phone" value="{{ old('phone') }}">
+                                    <input type="hidden" name="phone" id="phone"
+                                        value="{{ old('phone', $warehouse->phone) }}">
                                     @error('phone')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -57,7 +61,8 @@
                             <div class="mb-3">
                                 <label for="address" class="form-label">Warehouse location</label>
                                 <input type="text" class="form-control  @error('address') is-invalid @enderror"
-                                    id="address" name="address" placeholder="Enter location" value="{{ old('address') }}">
+                                    id="address" name="address" placeholder="Enter location"
+                                    value="{{ old('address', $warehouse->address) }}">
                                 @error('address')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -70,7 +75,9 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <div>
-                                    <img id="preview-photo" style="display:none; max-width:200px; margin-top:10px;" />
+                                    <img id="preview-photo"
+                                        src="{{ isset($warehouse->photo) ? asset($warehouse->photo) : '' }}"
+                                        style="max-width:200px; margin-top:10px; {{ isset($warehouse->photo) ? '' : 'display:none;' }}" />
                                 </div>
                             </div>
                             <div class="text-end">

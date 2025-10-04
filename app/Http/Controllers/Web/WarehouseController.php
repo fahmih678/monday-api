@@ -41,6 +41,26 @@ class WarehouseController extends Controller
         return back()->with('success', 'Warehouse created successfully');
     }
 
+    public function edit(int $id)
+    {
+        return view('pages.warehouse.edit', [
+            'warehouse' => $this->warehouseService->getById($id, ['*']),
+        ]);
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $validateData = $request->validate([
+            'name' => 'required|string|max:255|unique:warehouses,name,' . $id,
+            'address' => 'required|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'phone' => 'required|string|max:15|unique:warehouses,phone,' . $id,
+        ]);
+
+        $this->warehouseService->update($id, $validateData);
+        return back()->with('success', 'Warehouse updated successfully');
+    }
+
     public function show(int $warehouseId)
     {
         $warehouse = $this->warehouseService->getById($warehouseId, ['*']);

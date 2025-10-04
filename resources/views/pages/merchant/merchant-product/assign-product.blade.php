@@ -21,7 +21,7 @@
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    @if ($products->count() == 0)
+                    @if ($warehouse_product->count() == 0)
                         All products has been assigned.
                     @else
                         @if (session('success'))
@@ -33,19 +33,19 @@
                             <form action="{{ route('manage-merchants.attach-product', $merchant->id) }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="warehouse_id" id="warehouse_id" value=>
                                 <div class="mb-3">
-                                    <label for="product_id" class="form-label">Category</label>
-                                    <select class="form-control @error('product_id') is-invalid @enderror" name="product_id"
-                                        id="product_id">
+                                    <label for="wp" class="form-label">Product</label>
+                                    <select class="form-control @error('wp') is-invalid @enderror" name="wp"
+                                        id="wp">
                                         <option value="">--Select Product--</option>
-                                        @foreach ($products as $product)
-                                            <option value="{{ $product->id }}"
-                                                {{ old('product_id') == $product->id ? 'selected' : '' }}>
-                                                {{ $product->name }}</option>
+                                        @foreach ($warehouse_product as $wp)
+                                            <option value="{{ $wp->id }}"
+                                                {{ old('wp') == $wp->id ? 'selected' : '' }}>
+                                                {{ $wp->product->name }} - {{ $wp->warehouse->name }} ({{ $wp->stock }})
+                                            </option>
                                         @endforeach
                                     </select>
-                                    @error('product_id')
+                                    @error('wp')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

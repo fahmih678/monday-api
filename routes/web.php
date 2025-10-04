@@ -63,7 +63,7 @@ Route::prefix('manage-merchants')->name('manage-merchants.')->group(function () 
     });
     Route::controller(MerchantProductController::class)->group(function () {
         Route::get('{merchant_id}/assign-product', 'assignProduct')->name('assign-product');
-        Route::post('{merchant_id}/attach', 'store')->name('attach-product');
+        Route::post('{merchant_id}/attach', 'attach')->name('attach-product');
         Route::get('{merchant_id}/edit-stock/{product_id}', 'editStock')->name('edit-stock-product');
         Route::post('{merchant_id}/edit-stock/{product_id}', 'update')->name('update-stock-product');
     });
