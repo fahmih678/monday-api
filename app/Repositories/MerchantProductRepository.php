@@ -21,6 +21,7 @@ class MerchantProductRepository
     {
         return MerchantProduct::where('merchant_id', $merchantId)
             ->where('product_id', $productId)
+            ->with('product', 'warehouse')
             ->first();
     }
 

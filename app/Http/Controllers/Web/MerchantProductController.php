@@ -7,19 +7,24 @@ use App\Models\Product;
 use App\Models\WarehouseProduct;
 use App\Services\MerchantProductService;
 use App\Services\MerchantService;
+use App\Services\ProductService;
+use App\Services\WarehouseProductService;
 use Illuminate\Http\Request;
 
 class MerchantProductController extends Controller
 {
     private MerchantProductService $merchantProductService;
     private MerchantService $merchantService;
+    private WarehouseProductService $warehouseProductService;
 
     public function __construct(
         MerchantProductService $merchantProductService,
         MerchantService $merchantService,
+        WarehouseProductService $warehouseProductService
     ) {
         $this->merchantProductService = $merchantProductService;
         $this->merchantService = $merchantService;
+        $this->warehouseProductService = $warehouseProductService;
     }
 
     public function assignProduct(int $merchantId)
@@ -31,15 +36,17 @@ class MerchantProductController extends Controller
         $products_id = $merchantProducts->pluck('product_id')->toArray();
         $warehouses_id = $merchantProducts->pluck('warehouse_id')->toArray();
 
-        // ambil produk yang belum ada
-        $warehouseProduct = WarehouseProduct::whereNotIn('product_id', $products_id) // product_id yg mau dikecualikan
-            ->whereNotIn('warehouse_id', $warehouses_id)            // warehouse_id yg mau dikecualikan
-            ->with('product', 'warehouse') // eager load relasi product dan warehouse
+        $products = $this->warehouseProductService->getDistinct(['product_id', 'warehouse_id', 'stock', 'id']);
+
+        $products = WarehouseProduct::select(['product_id', 'warehouse_id', 'stock', 'id'])
+            ->whereNotIn('product_id', $products_id)
+            ->with(['product', 'warehouse'])
+            ->distinct()
             ->get();
 
         return view('pages.merchant.merchant-product.assign-product', [
             'merchant' => $merchants,
-            'warehouse_product' => $warehouseProduct,
+            'warehouse_products' => $products,
         ]);
     }
 
@@ -57,12 +64,12 @@ class MerchantProductController extends Controller
 
     public function attach(Request $request, int $merchant)
     {
-        $productId = WarehouseProduct::where('id', $request->wp)->value('product_id');
-        $request->merge(['product_id' => $productId]);
-        $request->merge(['warehouse_id' => $request->wp]);
+        $warehouseProduct = $this->warehouseProductService->getById($request->product, ['*']);
+        $request->merge(['product_id' => $warehouseProduct->product_id]);
+        $request->merge(['warehouse_id' => $warehouseProduct->warehouse_id]);
 
         $validated = $request->validate([
-            'wp' => 'required|exists:warehouse_products,id',
+            'product' => 'required|exists:warehouse_products,id',
             'product_id' => 'required|exists:products,id',
             'warehouse_id' => 'required|exists:warehouses,id',
             'stock' => 'required|integer|min:1',
@@ -71,10 +78,7 @@ class MerchantProductController extends Controller
 
         $merchantProduct = $this->merchantProductService->assignProductToMerchant($validated);
 
-        return response()->json([
-            'message' => 'Product assigned to merchant successfully.',
-            'data' => $merchantProduct,
-        ], 201);
+        return back()->with('success', 'Product assigned successfully');
     }
 
     public function update(Request $request, int $merchantId, int $productId)

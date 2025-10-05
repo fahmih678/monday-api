@@ -41,6 +41,7 @@ class MerchantProductService
                 $data['warehouse_id'],
                 $data['product_id'],
             );
+
             // cek data di warehouse
             if (!$warehouseProduct || $warehouseProduct->stock < $data['stock']) {
                 throw ValidationException::withMessages([
@@ -58,6 +59,8 @@ class MerchantProductService
                     'product' => ['Product already assigned to this merchant.'],
                 ]);
             }
+
+
 
             // kurangi stock di warehouse
             $this->warehouseProductRepository->updateStock(
