@@ -76,5 +76,6 @@ Route::prefix('manage-users')->name('manage-users.')->controller(UserController:
     Route::post('store', 'store')->name('store');
     Route::get('edit/{id}', 'edit')->name('edit');
     Route::post('update/{id}', 'update')->name('update');
-    Route::delete('delete/{id}', 'destroy')->name('destroy');
+    Route::get('assign-role', 'assignRole')->name('assign-role');
+    Route::post('assign-role', 'assignRoleStore')->name('assign-role.store');
 });

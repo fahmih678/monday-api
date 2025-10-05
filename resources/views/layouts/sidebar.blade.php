@@ -81,10 +81,11 @@
                         <ul class="nav nav-sm flex-column active">
                             <li class="nav-item">
                                 <a href="{{ route('manage-users.index') }}"
-                                    class="nav-link {{ request()->routeIs('manage-users.*') ? 'active' : '' }}">@lang('translation.users-list')</a>
+                                    class="nav-link {{ request()->routeIs('manage-users.index') ? 'active' : '' }}">@lang('translation.users-list')</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-starter" class="nav-link">@lang('translation.assign-role')</a>
+                                <a href="{{ route('manage-users.assign-role') }}"
+                                    class="nav-link {{ request()->routeIs('manage-users.assign-role') ? 'active' : '' }}">@lang('translation.assign-role')</a>
                             </li>
 
                         </ul>

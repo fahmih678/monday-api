@@ -4,27 +4,36 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\RoleService;
+use App\Services\UserRoleService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     private UserService $userService;
+    private RoleService $roleService;
+    private UserRoleService $userRoleService;
 
-    public function __construct(UserService $userService)
-    {
+    public function __construct(
+        UserService $userService,
+        RoleService $roleService,
+        UserRoleService $userRoleService,
+    ) {
         $this->userService = $userService;
+        $this->roleService = $roleService;
+        $this->userRoleService = $userRoleService;
     }
 
     public function index()
     {
         $users = User::with('roles')->paginate(10);
-        return view('pages.users.index', compact('users'));
+        return view('pages.user.index', compact('users'));
     }
 
     public function create()
     {
-        return view('pages.users.create');
+        return view('pages.user.create');
     }
 
     public function store(Request $request)
@@ -61,5 +70,32 @@ class UserController extends Controller
 
         $user = $this->userService->update($id, $validatedData);
         return back()->with('success', 'User updated successfully.');
+    }
+
+    public function assignRole(Request $request)
+    {
+        $users = $this->userService->getAll(['id', 'name']);
+        $roles = $this->roleService->getAll(['id', 'name']);
+        return view('pages.user.user-role.assign-role', compact('users', 'roles'));
+    }
+
+    public function assignRoleStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'user' => 'required|exists:users,id',
+            'role' => 'required|exists:roles,id',
+        ]);
+
+        $user = $this->userService->getById($validatedData['user'], ['*']);
+        if ($user->roles->contains('id', $validatedData['role'])) {
+            return back()->withErrors(['role' => 'User already has this role assigned.']);
+        }
+
+        $user = $this->userRoleService->assignRole(
+            $validatedData['user'],
+            $validatedData['role'],
+        );
+
+        return back()->with('success', 'Role assigned successfully.');
     }
 }
