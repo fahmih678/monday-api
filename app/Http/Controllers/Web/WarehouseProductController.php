@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\WarehouseProduct;
 use App\Services\CategoryService;
 use App\Services\ProductService;
+use App\Services\WarehouseProductService;
 use App\Services\WarehouseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,24 +18,25 @@ class WarehouseProductController extends Controller
 {
     private WarehouseService $warehouseService;
     private ProductService $productService;
+    private WarehouseProductService $warehouseProductService;
 
     public function __construct(
         WarehouseService $warehouseService,
-        ProductService $productService
+        ProductService $productService,
+        WarehouseProductService $warehouseProductService
     ) {
         $this->warehouseService = $warehouseService;
         $this->productService = $productService;
+        $this->warehouseProductService = $warehouseProductService;
     }
 
     public function assignProduct(int $warehouseId)
     {
-        $warehouse = $this->warehouseService->getById($warehouseId, ['*']);
-
-        // ambil semua product_id yang sudah ada di warehouse ini
-        $assignedProductIds = $warehouse->products()->pluck('products.id');
+        $warehouse = $this->warehouseService->getById($warehouseId, ['id', 'name']);
+        $productsInWarehouses = $this->warehouseProductService->getDistinct(['product_id'])->pluck('product_id')->toArray();
 
         // ambil produk yang belum ada
-        $products = Product::whereNotIn('id', $assignedProductIds)
+        $products = Product::whereNotIn('id', $productsInWarehouses)
             ->get(['id', 'name']);
 
         return view('pages.warehouse.warehouse-product.assign-product', [

@@ -7,6 +7,11 @@ use Illuminate\Validation\ValidationException;
 
 class WarehouseProductRepository
 {
+    public function getDistinct(array $fields)
+    {
+        return WarehouseProduct::select($fields)->distinct()->get();
+    }
+
     public function getByWarehouseAndProduct(int $warehouseId, int $productId): ?WarehouseProduct // type hinting
     {
         return WarehouseProduct::where('warehouse_id', $warehouseId)->where('product_id', $productId)->first();
