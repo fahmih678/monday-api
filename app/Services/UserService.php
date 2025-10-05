@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserService
@@ -41,10 +42,20 @@ class UserService
         $fields = ['*'];
         $user = $this->userRepository->getById($id, $fields);
 
+        if (!empty($data['password'])) {
+            if (Hash::check($data['password'], $user->password)) {
+                return back()->withErrors(['password' => 'Password baru tidak boleh sama dengan password lama.']);
+            }
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
         if (isset($data['photo']) && $data['photo'] instanceof UploadedFile) {
             if (!empty($user->photo)) {
                 $this->deletePhoto($user->photo);
             }
+            $data['photo'] = $this->uploadPhoto($data['photo']);
         }
 
         return $this->userRepository->update($id, $data);

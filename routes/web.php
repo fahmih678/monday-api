@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\{
     ProductController,
     WarehouseController,
     OverviewController,
+    UserController,
     WarehouseProductController,
 };
 use Illuminate\Support\Facades\Route;
@@ -67,4 +68,13 @@ Route::prefix('manage-merchants')->name('manage-merchants.')->group(function () 
         Route::get('{merchant_id}/edit-stock/{product_id}', 'editStock')->name('edit-stock-product');
         Route::post('{merchant_id}/edit-stock/{product_id}', 'update')->name('update-stock-product');
     });
+});
+
+Route::prefix('manage-users')->name('manage-users.')->controller(UserController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('create', 'create')->name('create');
+    Route::post('store', 'store')->name('store');
+    Route::get('edit/{id}', 'edit')->name('edit');
+    Route::post('update/{id}', 'update')->name('update');
+    Route::delete('delete/{id}', 'destroy')->name('destroy');
 });
