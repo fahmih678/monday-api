@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\{
     ProductController,
     WarehouseController,
     OverviewController,
+    RoleController,
     UserController,
     WarehouseProductController,
 };
@@ -78,4 +79,13 @@ Route::prefix('manage-users')->name('manage-users.')->controller(UserController:
     Route::post('update/{id}', 'update')->name('update');
     Route::get('assign-role', 'assignRole')->name('assign-role');
     Route::post('assign-role', 'assignRoleStore')->name('assign-role.store');
+});
+
+Route::prefix('manage-roles')->name('manage-roles.')->controller(RoleController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('create',  'create')->name('create');
+    Route::post('store',  'store')->name('store');
+    Route::get('edit/{id}',  'edit')->name('edit');
+    Route::post('update/{id}',  'update')->name('update');
+    Route::delete('delete/{id}',  'destroy')->name('destroy');
 });

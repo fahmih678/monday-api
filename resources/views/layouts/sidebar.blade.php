@@ -67,7 +67,8 @@
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>@lang('translation.pages')</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="roles">
+                    <a class="nav-link menu-link {{ request()->routeIs('manage-roles.*') ? 'active' : '' }}"
+                        href="{{ route('manage-roles.index') }}">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.roles')</span>
                     </a>
                 </li>
