@@ -8,19 +8,19 @@
             Manage Users
         @endslot
         @slot('title')
-            Create User
+            Assign Role to User
         @endslot
     @endcomponent
     <div class="row">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Create User
+                    <h4 class="card-title mb-0 flex-grow-1">Assign Role to User
                     </h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <p class="text-muted">Create new user
+                    <p class="text-muted">Assign a role to an existing user
                     </p>
                     @if (session('success'))
                         <div class="alert alert-success" role="alert">
@@ -46,7 +46,7 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="role" class="form-label">Product role</label>
+                                <label for="role" class="form-label">Select role</label>
                                 <select class="form-control @error('role') is-invalid @enderror" name="role"
                                     id="role" aria-valuenow="{{ old('role') }}">
                                     <option value="">---Select role---</option>
