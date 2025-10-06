@@ -38,7 +38,12 @@
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}"
                                             {{ old('user') == $user->id ? 'selected' : '' }}>
-                                            {{ $user->name }}</option>
+                                            {{ $user->name }} | @foreach ($user->roles as $role)
+                                                {{ $role->name }}@if (!$loop->last)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('user')

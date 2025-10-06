@@ -8,7 +8,7 @@ class UserRepository
 {
     public function getAll(array $fields)
     {
-        return User::select($fields)->latest()->get();
+        return User::select($fields)->with('roles')->latest()->get();
     }
 
     public function getPaginate(array $fields, int $perPage = 10)
