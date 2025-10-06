@@ -57,6 +57,9 @@
                                                 <a href="{{ route('manage-merchants.show', $merchant->id) }}"
                                                     class="btn btn-sm btn-primary waves-effect waves-light me-2"
                                                     href="#" role="button">Details</a>
+                                                <a href="{{ route('manage-merchants.edit', $merchant->id) }}"
+                                                    class="btn btn-sm btn-secondary waves-effect waves-light me-2"
+                                                    href="#" role="button">Edit</a>
                                                 <form action="{{ route('manage-merchants.destroy', $merchant->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf

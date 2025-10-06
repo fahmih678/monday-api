@@ -34,7 +34,8 @@ class TransactionService
         return $this->transactionRepository->getAll($fields);
     }
 
-    public function getPaginate(array $fields, int $num){
+    public function getPaginate(array $fields, int $num)
+    {
         return $this->transactionRepository->getPaginate($fields, $num);
     }
 
@@ -137,7 +138,19 @@ class TransactionService
         });
     }
 
-    public function getSumGrandTotalTransaction(){
-        return $this->transactionRepository->getSumGrandTotalTransaction();
+    public function getRevenue()
+    {
+        return $this->transactionRepository->getRevenue();
+    }
+
+    public function getRevenueByMerchant(int $merchantId)
+    {
+        return $this->transactionRepository->getRevenueByMerchant($merchantId);
+    }
+
+    public function getProductSoldByMerchant(int $merchantId)
+    {
+        $transactionByMerchant = $this->transactionRepository->getTransactionByMerchant($merchantId);
+        return $transactionByMerchant->sum('transaction_products_sum_quantity');
     }
 }

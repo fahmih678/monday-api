@@ -33,8 +33,19 @@ class OverviewController extends Controller
 
     public function index()
     {
+        if (auth()->user()->hasRole('manager')) {
+            return $this->overviewManager();
+        } elseif (auth()->user()->hasRole('keeper')) {
+            return $this->overviewKeeper();
+        } else {
+            abort(403);
+        }
+    }
+
+    public function overviewManager()
+    {
         // Monitoring
-        $totalRevenue = $this->transactionService->getSumGrandTotalTransaction();
+        $totalRevenue = $this->transactionService->getRevenue();
         $totalTransactions = $this->transactionService->getAll(['id'])->count();
         $totalWarehouses = $this->warehouseService->getAll(['id'])->count();
         $totalMerchants = $this->merchantService->getAll(['id'])->count();
@@ -54,6 +65,21 @@ class OverviewController extends Controller
             'top_merchants' => $topMerchants,
             'recent_transactions' => $recentTransactions,
             'top_categories' => $topCategories,
+        ]);
+    }
+
+    public function overviewKeeper()
+    {
+        $user = auth()->user();
+        $totalRevenue = $this->transactionService->getRevenueByMerchant($user->merchant->id);
+        $totalTransactions = $this->transactionService->getTransactionByMerchant($user->merchant->id)->count();
+        $totalProductsSold = $this->transactionService->getProductSoldByMerchant($user->merchant->id);
+
+
+        return view('pages.keeper.overview', [
+            'total_revenue' => $totalRevenue,
+            'total_transactions' => $totalTransactions,
+            'total_products_sold' => $totalProductsSold,
         ]);
     }
 }

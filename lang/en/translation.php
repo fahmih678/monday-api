@@ -218,4 +218,5 @@ return [
     "roles" => "Roles",
     "settings" => "Settings",
     "profile" => "Profile",
+    "my-merchants" => "My Merchants",
 ];

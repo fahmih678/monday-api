@@ -67,11 +67,18 @@ class TransactionRepository
         return Transaction::where('merchant_id', $merchantId)
             ->select(['id', 'name', 'phone', 'merchant_id', 'grand_total', 'created_at'])
             ->with(['merchant', 'transactionProducts.product.category'])
+            ->withSum('transactionProducts', 'quantity')
             ->latest()
-            ->paginate(10);
+            ->get();
     }
 
-    public function getSumGrandTotalTransaction(){
+    public function getRevenue()
+    {
         return Transaction::sum('sub_total');
+    }
+
+    public function getRevenueByMerchant(int $merchantId)
+    {
+        return Transaction::where('merchant_id', $merchantId)->sum('sub_total');
     }
 }

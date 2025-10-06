@@ -58,4 +58,14 @@ class MerchantController extends Controller
             'merchant' => $merchant,
         ]);
     }
+
+    public function edit(int $merchantId)
+    {
+        $merchant = $this->merchantService->getById($merchantId, ['*']);
+        $users = $this->userService->getAll(['id', 'name']);
+        return view('pages.merchant.edit', [
+            'merchant' => $merchant,
+            'users' => $users,
+        ]);
+    }
 }
