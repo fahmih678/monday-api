@@ -71,6 +71,12 @@ class OverviewController extends Controller
     public function overviewKeeper()
     {
         $user = auth()->user();
+
+        // dd($user->hasRole('keeper'));
+        if ($user->hasRole('keeper') || !$user->merchant) {
+            auth()->logout();
+            return redirect()->route('login')->with('error', 'No merchant assigned, please contact admin.');
+        }
         $totalRevenue = $this->transactionService->getRevenueByMerchant($user->merchant->id);
         $totalTransactions = $this->transactionService->getTransactionByMerchant($user->merchant->id)->count();
         $totalProductsSold = $this->transactionService->getProductSoldByMerchant($user->merchant->id);
