@@ -57,7 +57,7 @@
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
                             <img class="rounded-circle header-profile-user"
-                                src="@if (Auth::user()->avatar != '') {{ Auth::user()->photo }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }} @endif"
+                                src="@if (Auth::user()->photo != '') {{ Auth::user()->photo }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }} @endif"
                                 alt="Header Avatar">
                             <span class="text-start ms-xl-2">
                                 <span

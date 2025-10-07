@@ -81,7 +81,7 @@ class MerchantController extends Controller
         }
 
         try {
-            $merchants = $this->merchantService->getByKeeperId($userId);
+            $merchants = $this->merchantService->getByKeeperId($userId, ['*']);
             return response()->json(new MerchantResource($merchants));
         } catch (ModelNotFoundException $e) {
             return response()->json([

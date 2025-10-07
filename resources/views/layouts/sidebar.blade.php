@@ -104,13 +104,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->routeIs('transactions.*') ? 'active' : '' }}"
-                            href="{{ route('transactions.index') }}">
+                        <a class="nav-link menu-link {{ request()->routeIs('my-merchant-transactions.*') ? 'active' : '' }}"
+                            href="{{ route('my-merchant-transactions.index') }}">
                             <i class="ri-account-circle-line"></i> <span>@lang('translation.transactions')</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('manage-merchants.index') }}">
+                        <a class="nav-link menu-link {{ request()->routeIs('my-merchant-products.*') ? 'active' : '' }}"
+                            href="{{ route('my-merchant-products.index') }}">
                             <i class="ri-account-circle-line"></i> <span>@lang('translation.my-merchants')</span>
                         </a>
                     </li>

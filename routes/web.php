@@ -5,17 +5,19 @@ use App\Http\Controllers\Web\{
     CategoryController,
     MerchantController,
     MerchantProductController,
+    MyMerchantController,
     ProductController,
     WarehouseController,
     OverviewController,
     RoleController,
+    TransactionController,
     UserController,
     WarehouseProductController,
 };
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('pages-starter');
+    return redirect('login');
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -102,4 +104,9 @@ Route::middleware('auth', 'role:manager')->group(function () {
 
 Route::middleware('auth', 'role:keeper')->group(function () {
     Route::get('overview-keeper', [OverviewController::class, 'overviewKeeper'])->name('overview-keeper');
+    Route::get('my-merchant-transactions', [TransactionController::class, 'listTransactions'])->name('my-merchant-transactions.index');
+    Route::get('my-merchant-transactions/create', [TransactionController::class, 'create'])->name('my-merchant-transactions.create');
+
+    Route::get('my-merchant-transactions/{id}', [TransactionController::class, 'show'])->name('my-merchant-transactions.show');
+    Route::get('my-merchant-products', [MyMerchantController::class, 'index'])->name('my-merchant-products.index');
 });
