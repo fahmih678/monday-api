@@ -106,7 +106,7 @@ Route::middleware('auth', 'role:keeper')->group(function () {
     Route::get('overview-keeper', [OverviewController::class, 'overviewKeeper'])->name('overview-keeper');
     Route::get('my-merchant-transactions', [TransactionController::class, 'listTransactions'])->name('my-merchant-transactions.index');
     Route::get('my-merchant-transactions/create', [TransactionController::class, 'create'])->name('my-merchant-transactions.create');
-
+    Route::post('my-merchant-transactions', [TransactionController::class, 'store'])->name('my-merchant-transactions.store');
     Route::get('my-merchant-transactions/{id}', [TransactionController::class, 'show'])->name('my-merchant-transactions.show');
     Route::get('my-merchant-products', [MyMerchantController::class, 'index'])->name('my-merchant-products.index');
 });

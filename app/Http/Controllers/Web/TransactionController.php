@@ -32,8 +32,42 @@ class TransactionController extends Controller
 
     public function create()
     {
-        return view('pages.keeper.transaction.create');
+        $user = auth()->user();
+        if (!$user->hasRole('keeper') || !$user->merchant) {
+            return redirect()->route('login')->with('error', 'No merchant assigned, please contact admin.');
+        }
+        $products = $user->merchant->products ?? collect();
+        return view('pages.keeper.transaction.create', [
+            'products' => $products,
+        ]);
     }
+
+    public function store(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user->hasRole('keeper') || !$user->merchant) {
+            return redirect()->route('login')->with('error', 'No merchant assigned, please contact admin.');
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'products' => 'required|array|min:1',
+            'products.*.product_id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1',
+        ]);
+
+        $validated['merchant_id'] = $user->merchant->id;
+
+        $transaction = $this->transactionService->createTransaction($validated);
+
+        if ($transaction) {
+            return redirect()->route('my-merchant-transactions.index')->with('success', 'Transaction created successfully.');
+        } else {
+            return back()->with('error', 'Failed to create transaction. Please try again.');
+        }
+    }
+
 
     public function show(int $id)
     {

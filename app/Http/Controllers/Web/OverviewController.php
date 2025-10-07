@@ -71,9 +71,9 @@ class OverviewController extends Controller
     public function overviewKeeper()
     {
         $user = auth()->user();
+        $merchant = $this->merchantService->getByKeeperId($user->id, ['*']);
 
-        // dd($user->hasRole('keeper'));
-        if ($user->hasRole('keeper') || !$user->merchant) {
+        if (!$user->hasRole('keeper') || !$merchant) {
             auth()->logout();
             return redirect()->route('login')->with('error', 'No merchant assigned, please contact admin.');
         }
